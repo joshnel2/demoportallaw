@@ -341,8 +341,6 @@ function buildSidebar() {
     { view: 'wip',          label: 'Work in Progress' },
     { view: 'clients',      label: 'Top Clients' },
     null,
-    { view: 'billscorner',  label: "Bill's Corner" },
-    null,
     { view: 'upload',       label: 'Upload Reports' },
     { view: 'documents',    label: 'Documents' },
     { view: 'comments',     label: 'Comments' },
@@ -1461,9 +1459,7 @@ async function renderOriginators(root) {
               : 'No commission activity for this attorney in the loaded payment-allocation reports — their payouts appear once a report covering their collections is uploaded.')));
       }
       td.appendChild(el('p', { class: 'muted', style: { fontSize: '12px', margin: '8px 2px 2px' } },
-        'Figures follow the firm allocation rules (same engine as the commission ledger). ',
-        el('a', { href: '#', class: 'panel-link', onclick: (e) => { e.preventDefault(); navigate('billscorner'); } },
-          'Open Bill\'s Corner →')));
+        'Figures follow the firm allocation rules (same engine as the commission ledger).'));
     }).catch((e) => { td.textContent = 'Could not load commission data: ' + (e.message || e); });
     return tr;
   }
