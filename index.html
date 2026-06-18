@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <!-- If the inline fallback script below changes, recompute its sha256 here. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-M28iDoeKp9Uv7I+DiWBPfJ9gkUaIVB7XIFu6WZ6TRxw='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://api.github.com https://raw.githubusercontent.com https://objects.githubusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <title>BCL Billing Portal</title>
+  <base href="./">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%237a1f1f'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='26' fill='%23fff' text-anchor='middle'%3EBCL%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="billing.css" />
+  <!-- self-hosted (was jsdelivr CDN) — removes the supply-chain/MITM path into a page holding live secrets -->
+  <script defer src="chart.umd.min.js?v=4.4.1"></script>
+  <!-- xlsx-js-style: SheetJS 0.18.5 core (same as before) + cell-style write support, self-hosted -->
+  <script defer src="xlsx-js-style.min.js?v=1.2.0"></script>
+  <script defer src="crypto.js?v=1"></script>
+  <script defer src="billing.js?v=34"></script>
+</head>
+<body>
+  <!-- LOGIN -->
+  <div id="loginView" class="login-shell">
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="brand-mark">BCL</div>
+        <div class="brand-name">Brightwell Carter &amp; Lane LLP</div>
+      </div>
+      <p class="login-eyebrow">Owner · Billing Portal</p>
+      <h1>Sign in</h1>
+      <p class="login-sub">Restricted — firm owner access only.</p>
+
+      <form id="loginForm" class="login-form" autocomplete="off" onsubmit="return false">
+        <label>Username
+          <input type="text" name="username" required autocomplete="username" />
+        </label>
+        <label>Password
+          <input type="password" name="password" required autocomplete="current-password" />
+        </label>
+        <button type="submit" class="btn btn-primary">Sign in</button>
+        <p id="loginError" class="login-error" hidden>Incorrect username or password.</p>
+      </form>
+
+      <p class="login-foot">Demo portal — sign in with any username and password.</p>
+    </div>
+  </div>
+
+  <!-- APP SHELL (hidden until login) -->
+  <div id="appView" class="app-shell" hidden>
+    <aside class="sidebar">
+      <a href="#" class="sidebar-brand">
+        <div class="brand-mark sm">BCL</div>
+        <div class="brand-name sm">Billing Portal</div>
+      </a>
+
+      <nav class="sidebar-nav" id="sidebarNav"></nav>
+
+      <div class="sidebar-foot">
+        <div class="user-card">
+          <div class="user-avatar" id="userAvatar"></div>
+          <div>
+            <div class="user-name" id="userName"></div>
+            <div class="user-role" id="userRole"></div>
+          </div>
+        </div>
+        <button id="logoutBtn" class="logout-btn">Sign out</button>
+      </div>
+    </aside>
+
+    <main class="content" id="content">
+      <!-- views injected by JS -->
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      var form = document.getElementById('loginForm');
+      if (!form) return;
+      form.addEventListener('submit', function (e) {
+        if (window.__dnzLoginHandlerAttached) return;
+        e.preventDefault();
+        var err = document.getElementById('loginError');
+        if (err) {
+          err.hidden = false;
+          err.textContent = 'Login script still loading — try again in a second, or hard-refresh (Cmd+Shift+R).';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
